@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPA Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>RPA & Javascript Demo</h1>
+      
+        <p>Welcome to my RPA demo page. Please select a CSV file to check if it is blank or occupied:</p>
+        <form>
+            <div class="form-group">
+                <label for="fileInput">CSV File:</label>
+                <input type="file" id="fileInput" accept=".csv">
+            </div>
+            <div class="form-group">
+                <button type="button" id="checkButton" class="btn btn-primary">Check CSV</button>
+            </div>
+            <div class="form-group">
+                <label for="statusLabel">Status:</label>
+                <span id="statusLabel"></span>
+            </div>
+        </form>
+
+      <h6> I also have a PowerShell script App/.exe which completes the same task.</h6>
+      <button id="download-button">Download the exe</button>
+
+    </div>
+    <script>
+        $("#checkButton").click(function() {
+            var file = $("#fileInput")[0].files[0];
+            if (!file) {
+                $("#statusLabel").text("Please select a CSV file.");
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function() {
+                var data = reader.result;
+                var lines = data.split("\n");
+                if (lines.length <= 1) {
+                    $("#statusLabel").text("The CSV file is blank.");
+                } else {
+                    $("#statusLabel").text("The CSV file is not blank.");
+                }
+            };
+            reader.readAsText(file);
+        });
+
+
+      var downloadButton = document.getElementById("download-button");
+downloadButton.addEventListener("click", function(){
+    window.location.href = "https://drive.google.com/file/d/17KLJ40y9dv4xbbWu1v3BKbNAJiK1igKC/view?usp=sharing"; 
+});
+
+    </script>
+</body>
+</html>
